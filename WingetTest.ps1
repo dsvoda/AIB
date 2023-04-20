@@ -8,7 +8,7 @@ Invoke-WebRequest -Uri $wingetMsixBundleUrl -OutFile $wingetMsixBundle
 
 # Add Winget as a provisioned app
 Write-Information "Installing Winget as a provisioned app..."
-Add-AppxProvisionedPackage -Path $wingetMsixBundle -Online
+Add-AppxProvisionedPackage -PackagePath $wingetMsixBundle -Online
 
 # Get the path to AppInstallerCLI.exe
 $app = Get-AppxPackage -AllUsers -Name "Microsoft.DesktopAppInstaller"
@@ -26,7 +26,7 @@ $commands = @(
 
 foreach ($command in $commands) {
     Write-Information "Running winget command: $command"
-    & $wingetCliPath $command
+    Start-Process -FilePath $wingetCliPath -ArgumentList $command -Wait
 }
 
 # Install .NET 3.5 from Add/Remove Windows Features
