@@ -7,6 +7,11 @@ if ($app) {
     exit 1
 }
 
+if (-not (Test-Path $wingetCliPath)) {
+    Write-Host "File not found: $wingetCliPath"
+    exit 1
+}
+
 $commands = @(
     "install --id 7zip.7zip --exact --source winget --scope machine",
     "install --id VideoLAN.VLC --exact --source winget --scope machine",
