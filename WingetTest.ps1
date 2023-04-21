@@ -1,16 +1,28 @@
-$app = Get-AppxPackage -AllUsers -Name "Microsoft.DesktopAppInstaller"
-if ($app) {
-    $wingetCliPath = Join-Path -Path $app.InstallLocation -ChildPath "AppInstallerCLI.exe"
-    Write-Host "wingetCliPath: $wingetCliPath"
-} else {
-    Write-Host "Microsoft.DesktopAppInstaller not found"
+$installLocation = "C:\Program Files\WindowsApps"
+$pattern = "Microsoft.DesktopAppInstaller_*_x64__8wekyb3d8bbwe"
+$folders = Get-ChildItem -Path $installLocation -Directory -Filter $pattern -ErrorAction SilentlyContinue -Force
+
+if (-not $folders) {
+    Write-Host "Microsoft.DesktopAppInstaller folders not found"
     exit 1
 }
 
-if (-not (Test-Path $wingetCliPath)) {
-    Write-Host "File not found: $wingetCliPath"
+$wingetCliPath = $null
+
+foreach ($folder in $folders) {
+    $wingetPathCandidate = Join-Path -Path $folder.FullName -ChildPath "winget.exe"
+    if (Test-Path $wingetPathCandidate) {
+        $wingetCliPath = $wingetPathCandidate
+        break
+    }
+}
+
+if (-not $wingetCliPath) {
+    Write-Host "winget.exe not found"
     exit 1
 }
+
+Write-Host "wingetCliPath: $wingetCliPath"
 
 $commands = @(
     "install --id 7zip.7zip --exact --source winget --scope machine",
