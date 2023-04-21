@@ -8,7 +8,7 @@ Invoke-WebRequest -Uri $wingetMsixBundleUrl -OutFile $wingetMsixBundle
 
 # Add Winget as a provisioned app
 Write-Information "Installing Winget as a provisioned app..."
-Add-AppxProvisionedPackage -PackagePath $wingetMsixBundle -Online
+Add-AppxProvisionedPackage -PackagePath $wingetMsixBundle -Online -SkipLicense
 
 # Get the path to AppInstallerCLI.exe
 $app = Get-AppxPackage -AllUsers -Name "Microsoft.DesktopAppInstaller"
