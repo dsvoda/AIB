@@ -1,8 +1,12 @@
-# Get the path to AppInstallerCLI.exe
 $app = Get-AppxPackage -AllUsers -Name "Microsoft.DesktopAppInstaller"
-$wingetCliPath = Join-Path -Path $app.InstallLocation -ChildPath "AppInstallerCLI.exe"
+if ($app) {
+    $wingetCliPath = Join-Path -Path $app.InstallLocation -ChildPath "AppInstallerCLI.exe"
+    Write-Host "wingetCliPath: $wingetCliPath"
+} else {
+    Write-Host "Microsoft.DesktopAppInstaller not found"
+    exit 1
+}
 
-# Install apps using winget
 $commands = @(
     "install --id 7zip.7zip --exact --source winget --scope machine",
     "install --id VideoLAN.VLC --exact --source winget --scope machine",
@@ -13,6 +17,6 @@ $commands = @(
 )
 
 foreach ($command in $commands) {
-    Write-Information "Running winget command: $command"
-    Start-Process -FilePath $wingetCliPath -ArgumentList $command -Wait
+    Write-Host "Running: $wingetCliPath $command"
+    Start-Process -FilePath $wingetCliPath -ArgumentList $command -Wait -NoNewWindow
 }
