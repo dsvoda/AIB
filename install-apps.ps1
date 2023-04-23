@@ -17,7 +17,7 @@ function Install-App {
 
     Write-Host "AIB Customization: Installing $appName"
     try {
-        Invoke-Expression "$scriptDir\$appScript"
+        . "$PSScriptRoot\$appScript"
         Write-Log "$appName installed successfully"
         Write-Host "$appName installed successfully"
     }
