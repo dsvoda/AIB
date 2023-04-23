@@ -1,6 +1,7 @@
 # install_apps.ps1
 
 $appsDir = "C:\Gobi\apps"
+$scriptDir = "C:\Gobi\scripts"
 $logFile = "C:\Gobi\AIB_ApplicationInstall_$(Get-Date -Format 'yyyyMMdd').log"
 
 
@@ -16,7 +17,7 @@ function Install-App {
 
     Write-Host "AIB Customization: Installing $appName"
     try {
-        . "$appsDir\$appScript"
+        . "$scriptDir\$appScript"
         Write-Log "$appName installed successfully"
         Write-Host "$appName installed successfully"
     }
