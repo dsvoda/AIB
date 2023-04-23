@@ -16,8 +16,9 @@ function Install-App {
 
     Write-Host "AIB Customization: Installing $appName"
     try {
-        Set-Location $scriptDir
-        .\$appScript
+        $scriptPath = Join-Path -Path $PSScriptRoot -ChildPath $appScript
+        $command = "powershell.exe -ExecutionPolicy Bypass -File `"$scriptPath`""
+        Invoke-Expression $command
         Write-Log "$appName installed successfully"
         Write-Host "$appName installed successfully"
     }
