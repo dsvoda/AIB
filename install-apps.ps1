@@ -16,6 +16,7 @@ function Install-App {
 
     Write-Host "AIB Customization: Installing $appName"
     try {
+        Set-Location "C:\Gobi\Scripts"
         & $appScript
         Write-Log "$appName installed successfully"
         Write-Host "$appName installed successfully"
