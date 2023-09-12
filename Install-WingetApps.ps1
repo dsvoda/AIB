@@ -65,4 +65,4 @@ Invoke-WebRequest -Uri $msiUrl -OutFile $localPath
 Unblock-File -Path $localPath
 
 # Silent installation of the MSI using msiexec
-Start-Process -FilePath "msiexec.exe" -ArgumentList "/i `"$localPath`" /qn" -Wait
+Start-Process -FilePath "msiexec.exe" -ArgumentList "/i `"$localPath`" /qn /norestart" -Wait
